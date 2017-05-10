@@ -1,49 +1,82 @@
 import React from 'react';
 import request from 'superagent';
-
+import { Form, FormGroup, FormControl, Button, HelpBlock } from 'react-bootstrap';
 
 const GemSearchBar = React.createClass({
 
-  handleImageUpload: function(file) {
-    /** POST the uploaded file using backend API which will end up storing
-    the file on S3.
-    **/
+    getInitialState: function() {
+        return {
+            searchBarContents: '',
+            searchResults: '',
+            validationState: null,
+            validationErrorMessage: null,
+        }
+    },
 
+    onSuccess(response) {
+      console.log("on success!");
+      this.props.onApiSuccess(response);
+        this.setState({
+            validationState: "",
+            validationErrorMessage: ""
+        })
+    },
 
-    // let upload = request.post(this.props.apiVersion + this.props.storeImageRoute)
-    //                     .field('file', file);
-    //
-    // upload.end((err, response) => {
-    //   if (err) {
-    //     console.error("there was an error: " + err);
-    //   }
-    // });
-    //
-    // this.props.onDrop(file);
-  },
+    onFailure(response) {
+        console.log("on failure!");
+        console.log("Trigger Alert");
+        this.setState({
+            validationState: "error",
+            validationErrorMessage: "Uh oh! Looks like your gem wasn't found. \nPlease check your spelling and try again."
+        })
+    },
+
+    handleButtonClick: function() {
+        /***
+         * On button click we'll submit the gem search api request (routed through our own backed to deal with CORS issues)
+         */
+        request.get('/gem_search?gem_to_search=' + this.state.searchBarContents)
+            .set("Access-Control-Allow-Origin", "*")
+            .set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+            .then(this.onSuccess, this.onFailure)
+    },
+
+    handleOnChange: function(ev) {
+        this.setState({
+                searchBarContents: ev.target.value
+            }
+        )
+    },
 
 
     render: function () {
 
     const formInstance = (
-            <form>
-              <FormGroup bsSize="large">
-                <FormControl type="text" placeholder="Large text" />
+            <Form inline>
+              <FormGroup
+                  bsSize="large"
+                  controlId="formInlineSearch"
+                  validationState={this.state.validationState ? this.state.validationState : null }
+              >
+                <FormControl
+                    type="text"
+                    placeholder="Search Ruby Gems"
+                    onChange={this.handleOnChange}
+                />
+                  <HelpBlock>{this.state.validationErrorMessage}</HelpBlock>
               </FormGroup>
-            </form>
+
+               <Button
+                   bsStyle="primary"
+                   onClick={this.handleButtonClick}>
+                   Submit
+               </Button>
+            </Form>
+    );
 
       return (
-
-          <div>
+          <div className="search-bar">
               {formInstance}
-
-            {/*<Dropzone*/}
-              {/*className='dropzone'*/}
-              {/*onDrop={this.handleImageUpload}*/}
-              {/*multiple={false}*/}
-              {/*>*/}
-              {/*{this.props.uploadedFile ? <i className="fa fa-check-circle fa-5x" aria-hidden="true"> </i> : <p className="dropzone-contents"> Try dropping some files here, or click to select files to upload. </p>}*/}
-            {/*</Dropzone>*/}
           </div>
       );
     }

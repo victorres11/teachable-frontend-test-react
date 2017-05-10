@@ -1,9 +1,9 @@
 'use strict';
 import React from 'react';
 import ReactDOM from 'react-dom'
-import LasikContainer from './components/LasikContainer';
+import GemSearchContainer from './components/GemSearchContainer';
 
 ReactDOM.render(
-  <LasikContainer />,
+  <GemSearchContainer />,
   document.getElementById('main')
 );
