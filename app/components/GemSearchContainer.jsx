@@ -1,10 +1,9 @@
 'use strict';
 import React from 'react';
 import GemSearchBar from './GemSearchBar';
-import OCRContainer from './OCRContainer';
-import { Grid, Row, Col, Alert, Jumbotron, Navbar } from 'react-bootstrap';
+import { Grid, PageHeader, Navbar, ListGroup, ListGroupItem } from 'react-bootstrap';
 
-let LasikContainer = React.createClass({
+let GemSearchContainer = React.createClass({
 
     getInitialState: function() {
         return {
@@ -22,88 +21,61 @@ let LasikContainer = React.createClass({
         this.setState({
             searchResults: JSON.parse(response.text)
         });
+    },
 
-        console.log("onApiSuccess!!");
-        console.log(this.state);
+    listItemHelper() {
+        let listItems = [];
+        this.state.searchResults.dependencies.development.map(function(dep) {
+            listItems.push(<ListGroupItem
+                href={"https://rubygems.org/gems/" + dep.name }
+                key={dep.name}
+                target="_blank">{dep.name}</ListGroupItem>)
+        });
+        return listItems
     },
 
     render: function() {
-      let alertStyle = "",
-          alertText  = "";
 
-      switch (this.state.alertType) {
-          case "success":
-              alertStyle = "success";
-              alertText  = "File has been uploaded successfully!";
-              break;
-          case "failure":
-              alertStyle = "danger";
-              alertText  = "We were unable to perform OCR on the uploaded file. Please try another.";
-              break;
-      }
-
-      let alertInstance = (
-            <Alert
-              bsStyle={alertStyle}>
-                {alertText}
-            </Alert>
-          ),
-
-          gemSearchBar = (
+      let gemSearchBar = (
             <GemSearchBar
                 onApiSuccess={this.onApiSuccess}
-              // onDrop={this.onDrop}
-              // uploadedFile={this.state.file}
-              // apiVersion={API_VERSION}
-              // storeImageRoute={STORE_IMAGE_ROUTE}
             />
           ),
 
-          // ocrContainer = (
-          //   <OCRContainer
-          //       uploadedFile={this.state.file}
-          //       apiVersion={API_VERSION}
-          //       processImageRoute={PROCESS_IMAGE_ROUTE}
-          //       handleAlertType={ this.handleAlertType }
-          //   />
-          // ),
-
-          navbar = (
-          <Navbar>
-            <Navbar.Header>
-                <Navbar.Brand>
-                    Teachable Gem Search
-                </Navbar.Brand>
-            </Navbar.Header>
-          </Navbar>
+      navbar = (
+      <Navbar>
+        <Navbar.Header>
+            <Navbar.Brand>
+                Teachable Gem Search
+            </Navbar.Brand>
+        </Navbar.Header>
+      </Navbar>
       ),
 
-          jumbotron = (
-            <Jumbotron>
-              <h2>Gem Search</h2>
-            </Jumbotron>
-      ),
-          uploadAlert = (
-            <span>
-              {this.state.file ? alertInstance : null}
-            </span>
+      listgroupInstance = (
+        <ListGroup>
+            <ListGroupItem header="Found Gem" href={"https://rubygems.org/gems/" + this.state.searchResults.name}>{this.state.searchResults.name}</ListGroupItem>
+            <ListGroupItem header="Info" >{this.state.searchResults.info}</ListGroupItem>
+            <ListGroupItem header="Dependencies" className="dependencies-list"></ListGroupItem>
+            {this.state.searchResults ? this.listItemHelper() : null}
+        </ListGroup>
       );
+
 
     return (
       <div>
           { navbar }
-          { jumbotron }
+          <PageHeader>Gem Search</PageHeader>
 
       <Grid
         fluid={true}>
           {gemSearchBar}
       </Grid>
-          <p>{this.state.searchResults.name}</p>
-          <p>{this.state.searchResults.info}</p>
+          {this.state.searchResults ? listgroupInstance : null}
       </div>
     )
     }
 
 });
 
-export default LasikContainer;
+export default GemSearchContainer;
