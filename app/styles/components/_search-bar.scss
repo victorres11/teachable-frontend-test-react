@@ -1,29 +1,22 @@
-// _image-dropzone.scss
+// _search-bar.scss
 
-img#img-preview {
-  height: 100px;
-  width: 75px;
-}
-
-div.dropzone {
-  width: 300px;
-  height: 200px;
-  border-style: dashed;
-  margin: auto;
-}
-
-
-.fa-check-circle {
-color: green;
-}
-
-.fa-5x {
-  margin-left: 40%;
-  padding-top: 20%;
-}
-
-.dropzone-contents {
-  padding-top: 20%;
-  margin: 10px;
+div.search-bar {
   text-align: center;
+}
+
+div.form-group {
+  width: 40%;
+  padding: 10px;
+}
+
+input#formInlineSearch {
+  width: 100%;
+}
+
+a.list-group-item {
+  padding: 3px 3px 3px 15px;
+}
+
+span.dependencies-list{
+  padding-bottom: 0px;
 }
