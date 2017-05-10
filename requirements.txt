@@ -12,6 +12,7 @@ ecdsa==0.10
 enum34==1.1.6
 Fabric==1.8.2
 Flask==0.10.1
+Flask-Cors==3.0.2
 Flask-SQLAlchemy==1.0
 Flask-WTF==0.9.4
 future==0.16.0

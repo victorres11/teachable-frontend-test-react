@@ -1,60 +1,29 @@
 import os
-import logging
 import logging.config
-from flask import Flask, request, jsonify, render_template
-
-from ocr import process_image, store_image
+from flask import Flask, request, jsonify, render_template, make_response
+from flask_cors import CORS, cross_origin
+import requests
 
 app = Flask(__name__, static_folder="../dist", template_folder="../app/templates")
-_VERSION = 1 # API Version
-
+CORS(app)
 
 logging.config.fileConfig('config.ini')
-
-@app.route('/v{}/ocr'.format(_VERSION), methods=["POST"])
-def ocr():
-    try:
-        url = request.json['image_url']
-        if 'jpg' in url:
-            output = process_image(url)
-            return jsonify({"output": output})
-        else:
-            return jsonify({"error": "only .jpg files, please"})
-    except:
-        return jsonify(
-            {"error": "Did you mean to send: {'image_url': 'some_jpeg_url'}"}
-        )
-
-@app.route('/v{}/stringify_image'.format(_VERSION), methods=["POST"])
-def stringify_image ():
-    try:
-        image_file = request.files['file']
-        output = process_image(image_file.stream.read())
-
-        if not output:
-            output = "null"
-            logging.warning("No string returned from the OCR process... returning null.")
-
-        return jsonify(
-            {"output": output}
-        )
-    except Exception as err:
-        logging.error(err.message)
-        return jsonify(
-            {"error": err.message}
-        )
-
-
-@app.route('/v{}/store_to_s3'.format(_VERSION), methods=["POST"])
-def store_to_s3():
-    result = store_image(request.files['file'])
-    return jsonify({"image_url": result})
 
 
 @app.route('/')
 def index():
     print 'hello'
     return render_template('index.html')
+
+@app.route('/gem_search')
+def gem_search():
+    gem_to_search = request.args.get('gem_to_search')
+    results = requests.get('https://rubygems.org/api/v1/gems/{}.json'.format(gem_to_search))
+
+    if results.status_code == 404:
+        return make_response(jsonify(results.content), 404)
+
+    return results.content
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
