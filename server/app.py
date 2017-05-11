@@ -7,9 +7,6 @@ import requests
 app = Flask(__name__, static_folder="../dist", template_folder="../app/templates")
 CORS(app)
 
-logging.config.fileConfig('config.ini')
-
-
 @app.route('/')
 def index():
     print 'hello'

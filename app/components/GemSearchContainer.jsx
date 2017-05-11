@@ -2,6 +2,7 @@
 import React from 'react';
 import GemSearchBar from './GemSearchBar';
 import { Grid, PageHeader, Navbar, Nav, NavItem, Panel } from 'react-bootstrap';
+import { Link } from 'react-router-dom'
 
 let GemSearchContainer = React.createClass({
 
@@ -124,36 +125,36 @@ let GemSearchContainer = React.createClass({
             </Navbar.Brand>
         </Navbar.Header>
         <Nav>
-            <NavItem eventKey={1} href="#">Favorites</NavItem>
+            <NavItem eventKey={1} ><Link to='/foobar' className="nav-link">Favorites</Link></NavItem>
         </Nav>
       </Navbar>
       ),
 
-      panelInstance = (
+      resultsPanel = (
           <div>
               <Panel header="Found Gem" >
-                  <a href={"https://rubygems.org/gems/" + this.state.searchResults.name}> {this.state.searchResults.name}</a>
-                  {this.generateStarIcon(this.state.searchResults.name)}
+                  <a
+                      href={"https://rubygems.org/gems/" + this.state.searchResults.name}
+                      target="_blank"> {this.state.searchResults.name}</a>
+                  {this.props.generateStarIcon(this.state.searchResults.name)}
               </Panel>
               <Panel header="Info" >{this.state.searchResults.info}</Panel>
               <Panel header="Dependencies" >
-                  {this.state.searchResults ? this.listItemHelper() : null }
+                  {this.state.searchResults ? this.props.panelResultsHelper(this.state.searchResults.dependencies.development) : null }
               </Panel>
           </div>
-      )
-      ;
-
+      );
 
     return (
       <div>
-          { navbar }
+          {navbar}
           <PageHeader>Gem Search</PageHeader>
 
       <Grid
         fluid={true}>
           {gemSearchBar}
       </Grid>
-          {this.state.searchResults ? panelInstance : null}
+          {this.state.searchResults ? resultsPanel : null}
       </div>
     )
     }
