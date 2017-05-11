@@ -13,101 +13,11 @@ let GemSearchContainer = React.createClass({
             }
     },
 
-    handleAlertType: function (value) {
-        this.setState({
-            alertType: value
-        })
-    },
-
     onApiSuccess(response) {
         this.setState({
             searchResults: JSON.parse(response.text)
         });
     },
-
-    saveToFavorites(gemName) {
-        console.log("saveToFavorites invoked!");
-        let favoriteGems = this.loadExistingGems();
-        favoriteGems.push(gemName);
-        console.log(favoriteGems);
-        this.setState({
-           favoriteGems: favoriteGems
-        });
-        window.localStorage.setItem('gems', JSON.stringify(favoriteGems));
-    },
-
-    handleFavoritesClick(event) {
-        let existingGems = this.loadExistingGems(),
-            currentGemName = event.currentTarget.parentElement.innerText;
-
-        if (existingGems && existingGems.includes(currentGemName)) {
-            this.removeFromFavorites(existingGems, currentGemName)
-        } else {
-            this.saveToFavorites(currentGemName)
-        }
-    },
-
-    loadExistingGems() {
-        let existingGems = window.localStorage.getItem('gems');
-        existingGems = existingGems ? JSON.parse(existingGems) : [];
-        return existingGems
-    },
-
-    removeFromFavorites(existingGems, name) {
-        console.log("removeFromFavorites invoked!");
-        // remove this gem from existing gems
-        if (existingGems.includes(name)) {
-            let index = existingGems.indexOf(name);
-            existingGems.splice(index, 1)
-        }
-
-        if (existingGems) {
-            window.localStorage.clear();
-            window.localStorage.setItem('gems', JSON.stringify(existingGems));
-            this.setState({
-                favoriteGems: existingGems
-            });
-            }
-    },
-
-    isGemInFavorites(currentGemName){
-        let existingGems = this.loadExistingGems();
-        console.log(existingGems.includes(currentGemName));
-        return existingGems.includes(currentGemName)
-    },
-
-    generateStarIcon(gemName){
-        let starIconType = this.isGemInFavorites(gemName) ? "fa fa-star fa-lg" : "fa fa-star-o fa-lg";
-        return (
-            <i className={starIconType}
-               aria-hidden="true"
-               onClick={this.handleFavoritesClick}></i>
-        )
-    },
-
-    listItemHelper() {
-        let listItems = [];
-        let dependencyGems = this.state.searchResults.dependencies.development;
-
-        if (dependencyGems.length === 0) {
-            return "None"
-        }
-
-        this.state.searchResults.dependencies.development.map((dep) => {
-            let starIcon = this.generateStarIcon(dep.name);
-            listItems.push(
-                <div className="dependency-list">
-                    <a
-                    href={"https://rubygems.org/gems/" + dep.name }
-                    key={dep.name}
-                    target="_blank">{dep.name}</a>
-                    {starIcon}
-                </div>
-            )
-        });
-        return listItems
-    },
-
 
     render: function() {
 
