@@ -58,10 +58,11 @@ const GemSearchBar = React.createClass({
                     placeholder="Search Ruby Gems"
                     onChange={this.handleOnChange}
                 />
-                  <HelpBlock>{this.state.validationErrorMessage}</HelpBlock>
+                 <HelpBlock>{this.state.validationErrorMessage}</HelpBlock>
               </FormGroup>
 
                <Button
+                   id="search-button"
                    bsStyle="primary"
                    onClick={this.handleButtonClick}>
                    Submit

@@ -1,7 +1,7 @@
 'use strict';
 import React from 'react';
 import GemSearchBar from './GemSearchBar';
-import { Grid, PageHeader, Navbar, Nav, NavItem, Panel } from 'react-bootstrap';
+import { PageHeader, Navbar, Nav, NavItem, Panel } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
 
 let GemSearchContainer = React.createClass({
@@ -9,8 +9,15 @@ let GemSearchContainer = React.createClass({
     getInitialState: function() {
         return {
             searchResults: '',
-            favoriteGems: []
             }
+    },
+
+    propTypes: {
+        saveToFavorites: React.PropTypes.func.isRequired,
+        removeFromFavorites: React.PropTypes.func.isRequired,
+        panelResultsHelper: React.PropTypes.func.isRequired,
+        handleFavoritesClick: React.PropTypes.func.isRequired,
+        generateStarIcon: React.PropTypes.func.isRequired
     },
 
     onApiSuccess(response) {

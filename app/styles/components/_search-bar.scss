@@ -5,7 +5,7 @@ div {
     text-align: center;
   }
   .form-group {
-    width: 40%;
+    width: 30%;
     padding: 10px;
   }
   .dependency-list {
@@ -16,6 +16,11 @@ div {
     margin-right: auto;
     width: 50%;
   }
+}
+
+button#search-button {
+  position: fixed;
+  margin-top: 18px;
 }
 
 input#formInlineSearch {
