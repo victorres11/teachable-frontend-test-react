@@ -1,7 +1,7 @@
 {
-  "name": "Project-Lasik",
+  "name": "Teachable Front-End Assignment",
   "version": "1.0.0",
-  "description": "Catphister",
+  "description": "Search Ruby Gem Interface",
   "engines": {
     "node": "6.10.0"
   },
@@ -11,14 +11,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/victorres11/lasik.git"
+    "url": "git+https://github.com/victorres11/teachable-front-end-react.git"
   },
   "author": "Vic Torres",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/realpython/ultimate-flask-front-end/issues"
   },
-  "homepage": "https://github.com/realpython/ultimate-flask-front-end#readme",
   "devDependencies": {},
   "dependencies": {
     "babel-preset-es2015": "^6.24.0",
