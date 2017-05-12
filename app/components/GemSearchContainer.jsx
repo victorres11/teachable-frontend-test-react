@@ -59,16 +59,11 @@ let GemSearchContainer = React.createClass({
       <div>
           {navbar}
           <PageHeader>Gem Search</PageHeader>
-
-      <Grid
-        fluid={true}>
           {gemSearchBar}
-      </Grid>
           {this.state.searchResults ? resultsPanel : null}
       </div>
     )
     }
-
 });
 
 export default GemSearchContainer;

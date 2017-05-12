@@ -22,9 +22,7 @@ const GemSearchBar = React.createClass({
         })
     },
 
-    onFailure(response) {
-        console.log("on failure!");
-        console.log("Trigger Alert");
+    onFailure() {
         this.setState({
             validationState: "error",
             validationErrorMessage: "Uh oh! Looks like your gem wasn't found. \nPlease check your spelling and try again."
@@ -36,8 +34,6 @@ const GemSearchBar = React.createClass({
          * On button click we'll submit the gem search api request (routed through our own backed to deal with CORS issues)
          */
         request.get('/gem_search?gem_to_search=' + this.state.searchBarContents)
-            .set("Access-Control-Allow-Origin", "*")
-            .set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
             .then(this.onSuccess, this.onFailure)
     },
 
@@ -47,7 +43,6 @@ const GemSearchBar = React.createClass({
             }
         )
     },
-
 
     render: function () {
 

@@ -1,23 +1,23 @@
 'use strict';
 import React from 'react';
-import GemSearchBar from './GemSearchBar';
 import GemSearchContainer from './GemSearchContainer';
 import GemFavoritesContainer from './GemFavoritesContainer'
-import { Grid, PageHeader, Navbar, Nav, NavItem, Panel } from 'react-bootstrap';
-import { Link } from 'react-router-dom'
 
 const MainContainer = React.createClass({
 
     getInitialState: function() {
         return {
+            favoriteGems: []
         }
     },
 
+    propTypes: {
+        favorites: React.PropTypes.string.isRequired
+    },
+
     saveToFavorites(gemName) {
-        console.log("saveToFavorites invoked!");
         let favoriteGems = this.loadFavoriteGems();
         favoriteGems.push(gemName);
-        console.log(favoriteGems);
         this.setState({
             favoriteGems: favoriteGems
         });
@@ -52,19 +52,17 @@ const MainContainer = React.createClass({
 
     panelResultsHelper(gems, favorites=false) {
         let listItems = [];
-        // let dependencyGems = this.state.searchResults.dependencies.development;
 
         if (gems.length === 0) {
             return "None"
         }
-
 
         gems.map((gem) => {
             let name = favorites ? gem : gem.name ;
 
             let starIcon = this.generateStarIcon(name);
             listItems.push(
-                <div className="dependency-list">
+                <div className="dependency-list" key={name}>
                     <a
                         href={"https://rubygems.org/gems/" + name }
                         key={name}
@@ -77,8 +75,6 @@ const MainContainer = React.createClass({
     },
 
     removeFromFavorites(existingGems, name) {
-        console.log("removeFromFavorites invoked!");
-        // remove this gem from existing gems
         if (existingGems.includes(name)) {
             let index = existingGems.indexOf(name);
             existingGems.splice(index, 1)
@@ -95,13 +91,11 @@ const MainContainer = React.createClass({
 
     isGemInFavorites(currentGemName){
         let existingGems = this.loadFavoriteGems();
-        console.log(existingGems.includes(currentGemName));
         return existingGems.includes(currentGemName)
     },
 
     render: function() {
         if (this.props.favorites === 'false') {
-            console.log('test');
             var output = (
                 <div>
                     <GemSearchContainer
