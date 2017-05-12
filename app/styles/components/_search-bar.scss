@@ -19,8 +19,11 @@ div {
 }
 
 button#search-button {
-  position: fixed;
-  margin-top: 18px;
+    margin-bottom: 10px;
+}
+
+button#error-search-button {
+    margin-bottom: 52px;
 }
 
 input#formInlineSearch {

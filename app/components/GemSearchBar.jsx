@@ -62,7 +62,7 @@ const GemSearchBar = React.createClass({
               </FormGroup>
 
                <Button
-                   id="search-button"
+                   id={this.state.validationState ? 'error-search-button'  : 'search-button'}
                    bsStyle="primary"
                    onClick={this.handleButtonClick}>
                    Submit
