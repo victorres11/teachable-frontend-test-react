@@ -35,7 +35,7 @@ let GemSearchContainer = React.createClass({
             </Navbar.Brand>
         </Navbar.Header>
         <Nav>
-            <NavItem eventKey={1} ><Link to='/foobar' className="nav-link">Favorites</Link></NavItem>
+            <NavItem eventKey={1} ><Link to='/favorites' className="nav-link">Favorites</Link></NavItem>
         </Nav>
       </Navbar>
       ),

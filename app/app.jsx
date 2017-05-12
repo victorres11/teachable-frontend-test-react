@@ -15,7 +15,7 @@ class App extends Component {
             <BrowserRouter>
                 <div>
                     <Route exact path="/" component={() => (<MainContainer favorites="false" />)} />
-                    <Route path="/foobar" component={() => (<MainContainer favorites="true" />)} />
+                    <Route path="/favorites" component={() => (<MainContainer favorites="true" />)} />
                 </div>
             </BrowserRouter>
         )
