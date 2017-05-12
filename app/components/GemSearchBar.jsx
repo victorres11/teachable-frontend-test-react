@@ -31,7 +31,7 @@ const GemSearchBar = React.createClass({
 
     handleButtonClick: function() {
         /***
-         * On button click we'll submit the gem search api request (routed through our own backed to deal with CORS issues)
+         * On button click we'll submit the gem search api request (routed through our own backend to deal with CORS issues)
          */
         request.get('/gem_search?gem_to_search=' + this.state.searchBarContents)
             .then(this.onSuccess, this.onFailure)
