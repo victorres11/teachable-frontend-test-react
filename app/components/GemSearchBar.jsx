@@ -14,7 +14,6 @@ const GemSearchBar = React.createClass({
     },
 
     onSuccess(response) {
-      console.log("on success!");
       this.props.onApiSuccess(response);
         this.setState({
             validationState: "",
@@ -44,19 +43,27 @@ const GemSearchBar = React.createClass({
         )
     },
 
+    handleOnSubmit(ev){
+        ev.preventDefault();
+        this.handleButtonClick()
+    },
+
     render: function () {
 
+
     const formInstance = (
-            <Form inline>
+            <Form inline onSubmit={(ev) => this.handleOnSubmit(ev)}>
               <FormGroup
                   bsSize="large"
                   controlId="formInlineSearch"
                   validationState={this.state.validationState ? this.state.validationState : null }
+                  onSubmit={() => console.log('hi')}
               >
                 <FormControl
                     type="text"
                     placeholder="Search Ruby Gems"
                     onChange={this.handleOnChange}
+                    onSubmit={this.handleButtonClick}
                 />
                  <HelpBlock>{this.state.validationErrorMessage}</HelpBlock>
               </FormGroup>
