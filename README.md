@@ -11,6 +11,9 @@ Reviewing their favorites and removing ones they no longer want.
 
 Localstorage is fine for storage.
 
+
+# Result:
+
 This is hosted on Heroku and you can visit the working example via https://stark-ravine-30041.herokuapp.com/
 
 
