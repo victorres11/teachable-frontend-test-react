@@ -18,6 +18,9 @@ This is hosted on Heroku and you can visit the working example via https://stark
 ![alt-text](https://d2ppvlu71ri8gs.cloudfront.net/items/2D2U2Q1R0U1s0D3i2A2s/Screen%20Recording%202017-05-15%20at%2009.18%20PM.gif?v=2198b3eb "Ruby Search API Example")
 
 ## Files of Interest:
+
 `app/components/...`: Individual components and containers for front-end UI.
+
 `styles/components/...`: Individual styles for components
+
 `app/server/app.py`: Initializes app and makes index available. Also handles the api request to rubygems.org and handles CORS issues.
