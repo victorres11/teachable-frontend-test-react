@@ -1,6 +1,5 @@
-# teachable frontend test (but using react)
-
-## Requirements:
+# teachable frontend test
+## Assignment Requirements:
 
 They want to be able to search the API and have the relevant gems show with the description of them, and links to their listed dependencies within this interface.
 
